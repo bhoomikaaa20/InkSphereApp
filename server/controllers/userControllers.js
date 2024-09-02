@@ -129,25 +129,20 @@ const getAuthors = async (req, res, next) => {
 //UNPROTECTED
 const changeAvatar = async (req, res, next) => {
   try {
-    //Checking whether the avatar is present in req
     if (!req.files || !req.files.avatar) {
-      return next(new HttpError("Please upload an avatar"), 400);
+      return next(new HttpError("Please upload an avatar", 400));
     }
 
-    //Checking whether the user gone through authMiddleware and authenticated or not
     if (!req.user || !req.user._id) {
-      return next(new HttpError("User not authenticated"), 401);
+      return next(new HttpError("User not authenticated", 401));
     }
 
-    const avatar = req.files.avatar;
-
-    // Check file size
     if (avatar.size > 500000) {
       return next(
         new HttpError(
-          "The file is too big. Please select a file less than 500kb"
-        ),
-        422
+          "The file is too big. Please select a file less than 500kb",
+          422
+        )
       );
     }
 
@@ -156,14 +151,14 @@ const changeAvatar = async (req, res, next) => {
     if (!user) {
       return next(new HttpError("User not found"), 404);
     }
-
-    // Delete old avatar if exists
     if (user.avatar) {
-      fs.unlink(path.join(__dirname, "..", "uploads", user.avatar), (err) => {
-        if (err) {
-          return next(new HttpError("Error deleting old avatar", 500));
-        }
-      });
+      try {
+        await fs.promises.unlink(
+          path.join(__dirname, "..", "uploads", user.avatar)
+        );
+      } catch (err) {
+        return next(new HttpError("Error deleting old avatar", 500));
+      }
     }
 
     // Generate new file name
