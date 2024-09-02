@@ -14,8 +14,25 @@ app.use(express.json());
 app.use(expressFileUpload());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://66d5dc727698c3009947ede3--leafy-stroopwafel-ccb6e3.netlify.app", // Add your Netlify domain here
+];
 
+app.use(
+  cors({
+    credentials: true,
+    origin: function (origin, callback) {
+      // Allow requests with no origin, like mobile apps or curl requests
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy for this site does not allow access from the specified origin: ${origin}`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+  })
+);
 //Listening to server
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
