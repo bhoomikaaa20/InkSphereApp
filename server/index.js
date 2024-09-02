@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Updated CORS configuration
 const allowedOrigins = [
-  "https://66d5f709a7edd4204f70da0b--lighthearted-cranachan-3a198c.netlify.app",
+  "https://66d5fa1d1c073f2a2fb4f485--coruscating-syrniki-b735a3.netlify.app/",
 ];
 
 app.use(
