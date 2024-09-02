@@ -11,7 +11,7 @@ const CategoryPosts = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8084/api/posts/categories/${category}`
+          `https://inksphereapp.onrender.com/api/posts/categories/${category}`
         );
 
         setPosts(response.data.data);

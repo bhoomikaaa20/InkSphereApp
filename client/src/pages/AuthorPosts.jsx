@@ -11,7 +11,7 @@ const AuthorPosts = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8084/api/posts/users/${id}`
+          `https://inksphereapp.onrender.com/api/posts/users/${id}`
         );
 
         setPosts(response.data.data);

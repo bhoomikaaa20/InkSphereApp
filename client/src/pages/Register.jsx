@@ -22,7 +22,7 @@ const Register = () => {
     setError("");
     try {
       const response = await axios.post(
-        "http://localhost:8084/api/users/register",
+        "https://inksphereapp.onrender.com/api/users/register",
         userData
       );
       const newUser = await response.data;

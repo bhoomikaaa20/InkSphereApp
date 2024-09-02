@@ -92,7 +92,7 @@ const EditPost = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:8084/api/posts/${id}`,
+        `https://inksphereapp.onrender.com/api/posts/${id}`,
         PostData,
         {
           headers: {

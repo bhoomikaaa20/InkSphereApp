@@ -13,7 +13,7 @@ const DeletePost = ({ postId: id }) => {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:8084/api/posts/${id}`,
+        `https://inksphereapp.onrender.com/api/posts/${id}`,
         {
           withCredentials: true,
           headers: {

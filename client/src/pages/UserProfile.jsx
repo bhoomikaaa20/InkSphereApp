@@ -83,12 +83,16 @@ const UserProfile = () => {
       UserData.set("newPassword", newPassword);
       UserData.set("confirmNewPassword", confirmNewPassword);
 
-      await axios.patch(`http://localhost:8084/api/users/edit-user`, UserData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.patch(
+        `https://inksphereapp.onrender.com/api/users/edit-user`,
+        UserData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       navigate("/logout");
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred"); // Set a meaningful error message

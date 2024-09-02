@@ -22,7 +22,7 @@ const Dashboard = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8084/api/posts/users/${currentUser.data._id}`
+          `https://inksphereapp.onrender.com/api/posts/users/${currentUser.data._id}`
         );
         console.log(response.data.data);
         setPosts(response.data.data);

@@ -9,7 +9,9 @@ const Posts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:8084/api/posts");
+        const response = await axios.get(
+          "https://inksphereapp.onrender.com/api/posts"
+        );
         setPosts(response.data.data);
       } catch (err) {
         console.log(err);

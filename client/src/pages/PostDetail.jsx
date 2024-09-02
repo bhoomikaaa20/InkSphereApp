@@ -16,7 +16,7 @@ const PostDetail = () => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8084/api/posts/${id}`
+          `https://inksphereapp.onrender.com/api/posts/${id}`
         );
         setPost(response.data.post);
       } catch (err) {

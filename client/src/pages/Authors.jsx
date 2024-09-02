@@ -9,7 +9,9 @@ const Authors = () => {
   useEffect(() => {
     const fetchAuthors = async () => {
       try {
-        const response = await axios.get(`http://localhost:8084/api/users`);
+        const response = await axios.get(
+          `https://inksphereapp.onrender.com/api/users`
+        );
 
         // Log the data to see the response in the console
         console.log(response.data.data);

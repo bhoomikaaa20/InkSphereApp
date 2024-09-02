@@ -18,7 +18,7 @@ const PostAuthor = ({ authorID, createdAt }) => {
     const fetchAuthor = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8084/api/users/${authorID}`
+          `https://inksphereapp.onrender.com/api/users/${authorID}`
         );
         setAuthor(response.data.data);
       } catch (err) {
