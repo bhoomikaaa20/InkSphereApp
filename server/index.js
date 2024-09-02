@@ -16,9 +16,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.urlencoded({ extended: true }));
 
 // Updated CORS configuration
-const allowedOrigins = [
-  "https://66d5fa1d1c073f2a2fb4f485--coruscating-syrniki-b735a3.netlify.app/",
-];
+const allowedOrigins = ["https://coruscating-syrniki-b735a3.netlify.app"];
 
 app.use(
   cors({
