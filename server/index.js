@@ -16,7 +16,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://66d5dc727698c3009947ede3--leafy-stroopwafel-ccb6e3.netlify.app", // Add your Netlify domain here
+  "https://66d5de135cc7520d954a266f--monumental-dragon-9e376c.netlify.app", // Add your Netlify domain here
 ];
 
 app.use(
