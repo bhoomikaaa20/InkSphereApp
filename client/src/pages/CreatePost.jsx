@@ -77,7 +77,7 @@ const CreatePost = () => {
 
     try {
       const response = await axios.post(
-        "https://inksphereapp.onrender.com/api/posts",
+        "http://localhost:8084/api/posts",
         PostData,
         {
           headers: {
