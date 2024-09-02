@@ -17,8 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Updated CORS configuration
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://monumental-dragon-9e376c.netlify.app",
+  "https://66d5f709a7edd4204f70da0b--lighthearted-cranachan-3a198c.netlify.app",
 ];
 
 app.use(
