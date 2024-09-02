@@ -16,7 +16,10 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(express.urlencoded({ extended: true }));
 
 // Updated CORS configuration
-const allowedOrigins = ["https://coruscating-syrniki-b735a3.netlify.app"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://coruscating-syrniki-b735a3.netlify.app",
+];
 
 app.use(
   cors({
