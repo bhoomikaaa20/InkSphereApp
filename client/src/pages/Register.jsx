@@ -23,7 +23,8 @@ const Register = () => {
     try {
       const response = await axios.post(
         "https://inksphereapp.onrender.com/api/users/register",
-        userData
+        userData,
+        { withCredentials: true }
       );
       const newUser = await response.data;
       console.log(newUser);
