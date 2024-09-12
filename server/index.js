@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 // Updated CORS configuration
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://inksphereapp.netlify.app",
+  "https://inksphereapplication.netlify.app",
 ];
 
 app.use(
