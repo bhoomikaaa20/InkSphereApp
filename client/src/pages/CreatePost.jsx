@@ -4,6 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import { UserContext } from "../context/userContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../data";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
@@ -77,7 +78,7 @@ const CreatePost = () => {
 
     try {
       const response = await axios.post(
-        "https://inksphereapp.onrender.com/api/posts",
+        `${API_BASE_URL}/posts`,
         PostData,
         {
           headers: {

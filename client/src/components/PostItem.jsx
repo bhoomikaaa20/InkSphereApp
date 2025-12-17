@@ -1,6 +1,7 @@
 import React from "react";
 import PostAuthor from "./PostAuthor";
 import { Link } from "react-router-dom";
+import defaultAvatar from "../assets/avatar1.jpg";
 
 const PostItem = ({
   postId,
@@ -14,11 +15,22 @@ const PostItem = ({
   const shortDescription =
     description.length > 140 ? description.substr(0, 140) + "..." : description;
   const shortTitle = title.length > 30 ? title.substr(0, 30) + "..." : title;
+
+  const getThumbnailUrl = (thumb) => {
+    if (thumb && thumb !== "undefined" && thumb.startsWith('http')) {
+      return thumb;
+    }
+    if (thumb && thumb !== "undefined") {
+      return `${import.meta.env.VITE_ASSETS_URI}/uploads/${thumb}`;
+    }
+    return defaultAvatar;
+  };
+
   return (
     <article className="post">
       <div className="post__thumbnail">
         <img
-          src={`${import.meta.env.VITE_ASSETS_URI}/uploads/${thumbnail}`}
+          src={getThumbnailUrl(thumbnail)}
           alt="Post thumbnail"
         />
       </div>

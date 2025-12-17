@@ -11,7 +11,7 @@ const AuthorPosts = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `https://inksphereapp.onrender.com/api/posts/users/${id}`
+          `${import.meta.env.VITE_API_BASE_URL}/posts/users/${id}`
         );
 
         setPosts(response.data.data);

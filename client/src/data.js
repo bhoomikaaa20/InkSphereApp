@@ -1,7 +1,9 @@
-import Thumbnail1 from "./assets/blog1.jpg";
-import Thumbnail2 from "./assets/blog2.jpg";
-import Thumbnail3 from "./assets/blog3.jpg";
-import Thumbnail4 from "./assets/blog4.jpg";
+import Thumbnail1 from "./assets/pic1.jpg";
+import Thumbnail2 from "./assets/pic2.jpg";
+import Thumbnail3 from "./assets/pic3.jpg";
+import Thumbnail4 from "./assets/pic4.jpg";
+
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8084/api";
 
 export const DUMMY_POSTS = [
   {

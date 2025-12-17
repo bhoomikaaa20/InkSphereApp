@@ -11,7 +11,7 @@ const CategoryPosts = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `https://inksphereapp.onrender.com/api/posts/categories/${category}`
+          `${import.meta.env.VITE_API_BASE_URL}/posts/categories/${category}`
         );
 
         setPosts(response.data.data);

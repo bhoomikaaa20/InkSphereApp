@@ -4,6 +4,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
+import defaultAvatar from "../assets/avatar1.jpg";
 
 const UserProfile = () => {
   const [avatar, setAvatar] = useState("");
@@ -27,9 +28,14 @@ const UserProfile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      console.log("UserProfile: currentUser.data._id =", currentUser.data._id);
+      if (!currentUser.data._id) {
+        console.log("UserProfile: Skipping fetch because _id is undefined");
+        return;
+      }
       try {
         const response = await axios.get(
-          `http://localhost:8084/api/users/${currentUser.data._id}`,
+          `${import.meta.env.VITE_API_BASE_URL}/users/${currentUser.data._id}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -48,14 +54,15 @@ const UserProfile = () => {
   }, [currentUser.data._id, token]);
 
   const handleAvatar = async () => {
-    if (avatar) {
+    if (avatar && avatar instanceof File) {
       setIsAvatarTouched(false);
+      console.log("UserProfile: avatar before change-avatar API call:", avatar);
       try {
         const PostData = new FormData();
         PostData.set("avatar", avatar);
 
         const response = await axios.post(
-          "http://localhost:8084/api/users/change-avatar",
+          `${import.meta.env.VITE_API_BASE_URL}/users/change-avatar`,
           PostData,
           {
             headers: {
@@ -64,6 +71,7 @@ const UserProfile = () => {
             },
           }
         );
+        console.log("UserProfile: response.data.avatar:", response.data.avatar);
         setAvatar(response.data.avatar); // Update avatar with the new one
       } catch (err) {
         console.log(err);
@@ -74,9 +82,11 @@ const UserProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
+    console.log("UserProfile: avatar in handleSubmit:", avatar);
+
     try {
       const UserData = new FormData();
-      UserData.set("avatar", avatar);
+      // Note: Avatar is handled separately via change-avatar endpoint
       UserData.set("name", name);
       UserData.set("email", email);
       UserData.set("currentPassword", currentPassword);
@@ -84,7 +94,7 @@ const UserProfile = () => {
       UserData.set("confirmNewPassword", confirmNewPassword);
 
       await axios.patch(
-        `https://inksphereapp.onrender.com/api/users/edit-user`,
+        `${import.meta.env.VITE_API_BASE_URL}/users/edit-user`,
         UserData,
         {
           headers: {
@@ -109,11 +119,11 @@ const UserProfile = () => {
           <div className="avatar__wrapper">
             <div className="profile__avatar">
               <img
-                src={`${import.meta.env.VITE_ASSETS_URI}/uploads/${avatar}`}
+                src={typeof avatar === 'string' && avatar.includes('://') ? avatar : (avatar ? `${import.meta.env.VITE_ASSETS_URI}/uploads/${avatar}` : defaultAvatar)}
                 alt="User Avatar"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = "/path/to/default/avatar.jpg"; // Fallback in case of error
+                  e.target.src = defaultAvatar; // Fallback in case of error
                 }}
               />
             </div>

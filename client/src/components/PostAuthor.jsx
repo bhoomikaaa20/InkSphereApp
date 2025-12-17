@@ -16,9 +16,14 @@ const PostAuthor = ({ authorID, createdAt }) => {
 
   useEffect(() => {
     const fetchAuthor = async () => {
+      console.log("PostAuthor: authorID =", authorID);
+      if (!authorID) {
+        console.log("PostAuthor: Skipping fetch because authorID is undefined");
+        return;
+      }
       try {
         const response = await axios.get(
-          `https://inksphereapp.onrender.com/api/users/${authorID}`
+          `${import.meta.env.VITE_API_BASE_URL}/users/${authorID}`
         );
         setAuthor(response.data.data);
       } catch (err) {
@@ -36,9 +41,11 @@ const PostAuthor = ({ authorID, createdAt }) => {
         <div className="post__author-avatar">
           <img
             src={
-              author.avatar
-                ? `${import.meta.env.VITE_ASSETS_URI}/uploads/${author.avatar}`
-                : defaultAvatar
+              typeof author.avatar === 'string' && author.avatar.includes('://')
+                ? author.avatar
+                : (author.avatar && author.avatar !== "undefined"
+                  ? `${import.meta.env.VITE_ASSETS_URI}/uploads/${author.avatar}`
+                  : defaultAvatar)
             }
             alt="Author Avatar"
           />

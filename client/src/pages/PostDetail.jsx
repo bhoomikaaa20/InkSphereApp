@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
 import DeletePost from "./DeletePost";
+import defaultAvatar from "../assets/avatar1.jpg";
 
 const PostDetail = () => {
   const [post, setPost] = useState({});
@@ -16,15 +17,25 @@ const PostDetail = () => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(
-          `https://inksphereapp.onrender.com/api/posts/${id}`
+          `${import.meta.env.VITE_API_BASE_URL}/posts/${id}`
         );
-        setPost(response.data.post);
+        setPost(response.data.data);
       } catch (err) {
         setError(err.message);
       }
     };
     fetchPost();
   }, [id]);
+
+  const getThumbnailUrl = (thumb) => {
+    if (thumb && thumb !== "undefined" && thumb.startsWith('http')) {
+      return thumb;
+    }
+    if (thumb && thumb !== "undefined") {
+      return `${import.meta.env.VITE_ASSETS_URI}/uploads/${thumb}`;
+    }
+    return defaultAvatar;
+  };
 
   return (
     <section className="post-detail">
@@ -42,16 +53,14 @@ const PostDetail = () => {
               </div>
             )}
           </div>
-          <h1>This is Post title</h1>
+          <h1>{post.title}</h1>
           <div className="post-detail__thumbnail">
             <img
-              src={`${import.meta.env.VITE_ASSETS_URI}/uploads/${
-                post.thumbnail
-              }`}
+              src={getThumbnailUrl(post.thumbnail)}
               alt="img"
             />
           </div>
-          <p dangerouslySetInnerHTML={{ __html: post.description }}>{}</p>
+          <p dangerouslySetInnerHTML={{ __html: post.description }}>{ }</p>
         </div>
       )}
       <button className="post__back-btn" onClick={() => window.history.back()}>

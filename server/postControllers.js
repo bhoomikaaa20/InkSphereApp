@@ -208,7 +208,10 @@ const deletePost = async (req, res, next) => {
       return next(new HttpError("Unauthorized to delete this post", 403));
     }
 
-    // Note: Thumbnail is now stored in Cloudinary, no local deletion needed
+    if (post.thumbnail) {
+      const filePath = path.join(uploadDir, post.thumbnail);
+      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    }
 
     await Post.findByIdAndDelete(postId);
     res.status(200).json({ message: "Post deleted successfully" });

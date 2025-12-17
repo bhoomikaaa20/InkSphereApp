@@ -66,12 +66,12 @@ const EditPost = () => {
     const getPost = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8084/api/posts/${id}`
+          `${import.meta.env.VITE_API_BASE_URL}/posts/${id}`
         );
-        setTitle(response.data.post.title);
-        setCategory(response.data.post.category || ""); // Ensure category is set
-        setDescription(response.data.post.description);
-        // Set other fields if necessary
+        setTitle(response.data.data.title);
+        setCategory(response.data.data.category || ""); // Ensure category is set
+        setDescription(response.data.data.description);
+        setThumbnail(response.data.data.thumbnail);
       } catch (err) {
         setError("Failed to fetch post data");
       }
@@ -86,13 +86,15 @@ const EditPost = () => {
     PostData.set("title", title);
     PostData.set("category", category);
     PostData.set("description", description);
-    if (thumbnail) {
-      PostData.set("thumbnail", thumbnail);
+    if (thumbnail instanceof File) {
+      PostData.append("thumbnail", thumbnail);
     }
+
+    console.log("EditPost: thumbnail before API call:", thumbnail);
 
     try {
       const response = await axios.patch(
-        `https://inksphereapp.onrender.com/api/posts/${id}`,
+        `${import.meta.env.VITE_API_BASE_URL}/posts/${id}`,
         PostData,
         {
           headers: {
@@ -102,6 +104,8 @@ const EditPost = () => {
         }
       );
       console.log(response.data.message);
+      console.log("EditPost: response.data.data.thumbnail:", response.data.data.thumbnail);
+      setThumbnail(response.data.data.thumbnail); // Update thumbnail with new URL
       navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "An unexpected error occurred");
@@ -136,9 +140,15 @@ const EditPost = () => {
             value={description}
             onChange={setDescription}
           />
+          {thumbnail && typeof thumbnail === 'string' && (
+            <div>
+              <p>Current Thumbnail:</p>
+              <img src={thumbnail} alt="Current thumbnail" style={{ maxWidth: '200px' }} />
+            </div>
+          )}
           <input
             type="file"
-            onChange={(e) => setThumbnail(e.target.value[0])}
+            onChange={(e) => setThumbnail(e.target.files[0])}
             accept="jpg,jpeg,png"
           />
           <button type="submit" className="btn primary">

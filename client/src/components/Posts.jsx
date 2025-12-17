@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PostItem from "./PostItem";
 import axios from "axios";
+import { API_BASE_URL } from "../data";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -10,7 +11,7 @@ const Posts = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          "https://inksphereapp.onrender.com/api/posts"
+          `${API_BASE_URL}/posts`
         );
         setPosts(response.data.data);
       } catch (err) {

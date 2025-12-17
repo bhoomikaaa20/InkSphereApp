@@ -10,7 +10,7 @@ const Authors = () => {
     const fetchAuthors = async () => {
       try {
         const response = await axios.get(
-          `https://inksphereapp.onrender.com/api/users`
+          `${import.meta.env.VITE_API_BASE_URL}/users`
         );
 
         // Log the data to see the response in the console
@@ -39,11 +39,11 @@ const Authors = () => {
                 <div className="author__avatar">
                   <img
                     src={
-                      auth.avatar
-                        ? `${import.meta.env.VITE_ASSETS_URI}/uploads/${
-                            auth.avatar
-                          }`
-                        : defaultAvatar
+                      typeof auth.avatar === 'string' && auth.avatar.includes('://')
+                        ? auth.avatar
+                        : (auth.avatar && auth.avatar !== "undefined"
+                          ? `${import.meta.env.VITE_ASSETS_URI}/uploads/${auth.avatar}`
+                          : defaultAvatar)
                     }
                     alt={`image of ${auth.name}`}
                   />

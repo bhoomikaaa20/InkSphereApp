@@ -23,7 +23,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://inksphereapp.onrender.com/api/users/login",
+        `${import.meta.env.VITE_API_BASE_URL}/users/login`,
         userData
       );
       const user = await response.data;

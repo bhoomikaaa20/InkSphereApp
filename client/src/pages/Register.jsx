@@ -22,7 +22,7 @@ const Register = () => {
     setError("");
     try {
       const response = await axios.post(
-        "https://inksphereapp.onrender.com/api/users/register",
+        `${import.meta.env.VITE_API_BASE_URL}/users/register`,
         userData,
         { withCredentials: true }
       );

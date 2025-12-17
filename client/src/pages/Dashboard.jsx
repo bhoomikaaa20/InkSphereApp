@@ -12,6 +12,16 @@ const Dashboard = () => {
   const token = currentUser?.data?.token;
   const navigate = useNavigate();
 
+  const getThumbnailUrl = (thumb) => {
+    if (thumb && thumb !== "undefined" && thumb.startsWith('http')) {
+      return thumb;
+    }
+    if (thumb && thumb !== "undefined") {
+      return `${import.meta.env.VITE_ASSETS_URI}/uploads/${thumb}`;
+    }
+    return defaultAvatar;
+  };
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -22,7 +32,7 @@ const Dashboard = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `https://inksphereapp.onrender.com/api/posts/users/${currentUser.data._id}`
+          `${import.meta.env.VITE_API_BASE_URL}/posts/users/${currentUser.data._id}`
         );
         console.log(response.data.data);
         setPosts(response.data.data);
@@ -42,14 +52,8 @@ const Dashboard = () => {
               <div className="dashboard__post-info">
                 <div className="dashboard__post-thumbnail">
                   <img
-                    src={
-                      posts.avatar
-                        ? `${import.meta.env.VITE_ASSETS_URI}/uploads/${
-                            post.avatar
-                          }`
-                        : defaultAvatar
-                    }
-                    alt="Author Avatar"
+                    src={getThumbnailUrl(post.thumbnail)}
+                    alt="Post thumbnail"
                   />
                 </div>
                 <h5> {post.title}</h5>
