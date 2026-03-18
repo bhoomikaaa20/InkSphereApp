@@ -8,10 +8,10 @@ const cloudinary = require("cloudinary").v2;
 // Ensure 'uploads' directory exists at server startup
 const createPost = async (req, res, next) => {
   try {
-    const { title, category, description } = req.body;
+    const { title, subtitle, test, category, description } = req.body;
 
     // Check for required fields
-    if (!title || !category || !description || !req.files?.thumbnail) {
+    if (!title || !subtitle || !test || !category || !description || !req.files?.thumbnail) {
       return next(new HttpError("Please fill all the details", 423));
     }
 
@@ -48,11 +48,14 @@ const createPost = async (req, res, next) => {
     // Save post details to the database
     const newPost = await Post.create({
       title,
+      subtitle,
+      test,
       category,
       description,
       thumbnail: uploadResult.secure_url,
       creator: req.user._id,
     });
+    console.log("subtitle is : ", subtitle);
 
     return res.status(201).json({
       message: "New Post Created",

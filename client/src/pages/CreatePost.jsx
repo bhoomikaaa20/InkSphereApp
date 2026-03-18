@@ -8,6 +8,8 @@ import { API_BASE_URL } from "../data";
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
+  const [subtitle, setSubTitle] = useState("");
+  const [test, setTest] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
@@ -70,6 +72,9 @@ const CreatePost = () => {
 
     const PostData = new FormData();
     PostData.set("title", title);
+    PostData.set("subtitle", subtitle);
+    PostData.set("test", test);
+
     PostData.set("category", category);
     PostData.set("description", description);
     if (thumbnail) {
@@ -105,6 +110,18 @@ const CreatePost = () => {
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Subtitle"
+            value={subtitle}
+            onChange={(e) => setSubTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Test"
+            value={test}
+            onChange={(e) => setTest(e.target.value)}
           />
           <select
             name="category"
